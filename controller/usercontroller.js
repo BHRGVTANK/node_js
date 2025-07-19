@@ -1,4 +1,6 @@
 var user = require('../model/usermodel');
+var product = require('../model/productmodel');
+
 let nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
@@ -8,6 +10,34 @@ let transporter = nodemailer.createTransport({
     pass: 'lnqj bvnl dead vbbz'
   }
 });
+
+exports.insert_p = async (req,res) => {
+    try {
+        var data = await product.create(req.body);
+         res.status(200).json({
+                status:"success",
+                data
+            })
+    } catch (error) {
+         res.status(200).json({
+                status:error.message
+            })
+    }
+}
+
+exports.view_p = async (req,res) => {
+    try {
+        var data = await product.find().populate("u_id");
+         res.status(200).json({
+                status:"success",
+                data
+            })
+    } catch (error) {
+         res.status(200).json({
+                status:error.message
+            })
+    }
+}
 
 exports.index =  async (req,res) => {
 
